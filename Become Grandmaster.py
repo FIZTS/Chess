@@ -31,8 +31,21 @@ Restart game
 
 import pygame
 
+class King:
+    pass
+
 pos_letter = "abcdefgh"
 pos_number = "12345678"
+blank = []
+white_king = ['wK']
+white_queen = ['wQ']
+white_rook = ['wR0','wR1']
+white_knight = ['wN0','wN1']
+white_bishop = ['wB0','wB1']
+white_pawn = ['wP0','wP1','wP2','wP3','wP4','wP5','wP6','wP7']
+
+
+
 
 board_called = [['a8','a7','a6','a5','a4','a3','a2','a1']
 ['b8','b7','b6','b5','b4','b3','b2','b1'],
@@ -43,13 +56,14 @@ board_called = [['a8','a7','a6','a5','a4','a3','a2','a1']
 ['g8','g7','g7','g5','g4','g3','g2','g1'],
 ['h8','h7','h7','h5','h4','h3','h2','h1']]
 
+
 board_pieces = [['bR', 'bN', 'bB', 'bQ', 'bK', 'bB', 'bN', 'bR'],
 ['bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP', 'bP'],
-['','','','','','','',''],
-['','','','','','','',''],
-['','','','','','','',''],
-['','','','','','','',''],
-['wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP', 'wP'],
-['wR', 'wN', 'wB', 'wQ', 'wK', 'wB', 'wN', 'wR']]
+[blank,blank,blank,blank,blank,blank,blank,blank],
+[blank,blank,blank,blank,blank,blank,blank,blank],
+[blank,blank,blank,blank,blank,blank,blank,blank],
+[blank,blank,blank,blank,blank,blank,blank,blank],
+[white_pawn[0], white_pawn[1], white_pawn[2], white_pawn[3], white_pawn[4], white_pawn[5], white_pawn[6], white_pawn[7]],
+[white_rook[0], white_knight[0], white_bishop[0], white_queen, white_king, white_bishop[1], white_knight[1], white_rook[1]]]
 
 print(board_pieces)
