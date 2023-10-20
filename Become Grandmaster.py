@@ -27,3 +27,4 @@ Restart game
     - Should the board be flipped??
 '''
 
+print("afaifha")
