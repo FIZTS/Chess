@@ -81,9 +81,9 @@ class Pawn(ChessPiece):
     def __init__(self, color):
         super().__init__(color)
         if color == 'white':
-            self.symbol = ' ♟ '
-        else:
             self.symbol = ' ♙ '
+        else:
+            self.symbol = ' ♟ '
 
 
 class Rook(ChessPiece):
@@ -91,6 +91,8 @@ class Rook(ChessPiece):
         super().__init__(color)
         #self.symbol = ' ♖ ' if color == 'white' else ' ♜ '
         if color == 'white':
+            self.symbol = ' ♖ '
+        else:
             self.symbol = ' ♜ '
 
 
@@ -144,7 +146,7 @@ class ChessBoard:
         self.board[7][4] = King('black')
 
     def print_board(self):
-        print("  a  b  c  d  e  f  g  h")
+        print("    a  b  c  d  e  f  g  h")
         for i, row in enumerate(self.board, 1):
             print(f"{9 - i} ", end="")
             for piece in row:
