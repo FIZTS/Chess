@@ -89,7 +89,6 @@ class Pawn(ChessPiece):
 class Rook(ChessPiece):
     def __init__(self, color):
         super().__init__(color)
-        #self.symbol = ' ♖ ' if color == 'white' else ' ♜ '
         if color == 'white':
             self.symbol = ' ♖ '
         else:
@@ -99,25 +98,38 @@ class Rook(ChessPiece):
 class Knight(ChessPiece):
     def __init__(self, color):
         super().__init__(color)
-        self.symbol = ' ♘ ' if color == 'white' else ' ♞ '
+        if color == 'white':
+            self.symbol = ' ♘ '
+        else:
+            self.symbol = ' ♞ '
 
 
 class Bishop(ChessPiece):
     def __init__(self, color):
         super().__init__(color)
-        self.symbol = ' ♗ ' if color == 'white' else ' ♝ '
+        if color == 'white':
+            self.symbol = ' ♗ '
+        else:
+            self.symbol = ' ♝ '
 
 
 class Queen(ChessPiece):
     def __init__(self, color):
         super().__init__(color)
-        self.symbol = ' ♕ ' if color == 'white' else ' ♛ '
+        if color == 'white':
+            self.symbol = ' ♕ '
+        else:
+            self.symbol = ' ♛ '
 
 
 class King(ChessPiece):
     def __init__(self, color):
         super().__init__(color)
-        self.symbol = ' ♔ ' if color == 'white' else ' ♚ '
+        #self.symbol = ' ♔ ' if color == 'white' else ' ♚ '
+        if color == 'white':
+            self.symbol = ' ♔ '
+        else:
+            self.symbol = ' ♚ '
 
 
 class ChessBoard:
