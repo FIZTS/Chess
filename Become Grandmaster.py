@@ -53,23 +53,23 @@ class Rook(ChessPiece):
         is_vertical = col_start == col_end
 
         if is_horizontal:
-            # Obstracle checking
+            # Obstracle checking Horizon
             step_col = 1 if col_end > col_start else -1
             j = col_start + step_col
             while j != col_end:
                 if board[row_start][j] is not None:
-                    return False  # Blocked by another piece
+                    return False
                 j += step_col
         elif is_vertical:
-            # Check for obstructions in the vertical path
+            # Obstracle checking Vertical
             step_row = 1 if row_end > row_start else -1
             i = row_start + step_row
             while i != row_end:
                 if board[i][col_start] is not None:
-                    return False  # Blocked by another piece
+                    return False
                 i += step_row
 
-        return True  # If there are no obstructions, the move is valid
+        return True  # Valid move
 
 
 class Knight(ChessPiece):
@@ -84,14 +84,12 @@ class Knight(ChessPiece):
         row_start, col_start = start
         row_end, col_end = end
 
-        # Calculate the absolute differences in row and column
         row_diff = abs(row_end - row_start)
         col_diff = abs(col_end - col_start)
 
-        # Check if the move is an L-shape: two squares in one direction and one square in a perpendicular direction
         if (row_diff == 2 and col_diff == 1) or (row_diff == 1 and col_diff == 2):
             target_piece = board[row_end][col_end]
-            # Check if the target square is empty or contains an opponent's piece
+            # Check if the end square is None or other colour piece
             if target_piece is None or target_piece.color != self.color:
                 return True
 
@@ -139,37 +137,28 @@ class Queen(ChessPiece):
         else:
             self.symbol = ' ♛ '
 
-class Queen(ChessPiece):
-    def __init__(self, color):
-        super().__init__(color)
-        if color == 'black':
-            self.symbol = ' ♕ '
-        else:
-            self.symbol = ' ♛ '
-
     def valid_moves(self, start, end, board):
         row_start, col_start = start
         row_end, col_end = end
 
-        # Check if the move is horizontal, vertical, or diagonal
         is_horizontal = row_start == row_end
         is_vertical = col_start == col_end
         is_diagonal = abs(row_end - row_start) == abs(col_end - col_start)
 
-        # Check if there are no pieces blocking the path
+        # Check if it is blocked
         if is_horizontal:
             step_col = 1 if col_end > col_start else -1
             j = col_start + step_col
             while j != col_end:
                 if board[row_start][j] is not None:
-                    return False  # Blocked by another piece
+                    return False  # Got blocked
                 j += step_col
         elif is_vertical:
             step_row = 1 if row_end > row_start else -1
             i = row_start + step_row
             while i != row_end:
                 if board[i][col_start] is not None:
-                    return False  # Blocked by another piece
+                    return False  # Got blocked
                 i += step_row
         elif is_diagonal:
             step_row = 1 if row_end > row_start else -1
@@ -177,14 +166,14 @@ class Queen(ChessPiece):
             i, j = row_start + step_row, col_start + step_col
             while i != row_end and j != col_end:
                 if board[i][j] is not None:
-                    return False  # Blocked by another piece
+                    return False  # Got blocked
                 i += step_row
                 j += step_col
         else:
             return False  # Invalid move
 
         target_piece = board[row_end][col_end]
-        # Check if the target square is empty or contains an opponent's piece
+        
         if target_piece is None or target_piece.color != self.color:
             return True
 
@@ -209,7 +198,7 @@ class King(ChessPiece):
 
         if is_horizontal or is_vertical or is_diagonal:
             target_piece = board[row_end][col_end]
-            # Check if the target square is empty or contains an opponent's piece
+            # Check if it is None or Opponent's piece
             if target_piece is None or target_piece.color != self.color:
                 return True
 
@@ -241,10 +230,11 @@ class ChessBoard:
         self.board[0][4] = King('white')
         self.board[7][4] = King('black')
 
+
     def print_board(self):
-        print("    a  b  c  d  e  f  g  h")
+        print("   a  b  c  d  e  f  g  h")
         for i, row in enumerate(self.board, 1):
-            print(f"{i} ", end="")
+            print(f"{i}", end="")
             for piece in row:
                 if piece is None:
                     print(' . ', end='')
@@ -265,11 +255,10 @@ class ChessBoard:
             self.board[end[0]][end[1]] = self.board[start[0]][start[1]]
             self.board[start[0]][start[1]] = None
 
-        # Check if either king is missing
+        # Check if either king is gone
             white_king_exists = any(isinstance(piece, King) and piece.color == 'white' for row in self.board for piece in row)
             black_king_exists = any(isinstance(piece, King) and piece.color == 'black' for row in self.board for piece in row)
 
-            # Print game end message if either king is missing
             if not white_king_exists or not black_king_exists:
                 print("!!!!!!!!!!!!!!!!!!!!Game Over!!!!!!!!!!!!!!!!!!!!")
                 exit()
