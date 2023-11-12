@@ -1,12 +1,12 @@
 class ChessPiece:
-    def __init__(self, color):
+    def __init__(self, color): #attribute
         self.color = color
 
-    def __str__(self):
+    def __str__(self): #class representation
         return self.symbol
 
     def valid_moves(self, start, end, board):
-        raise NotImplementedError("Subclasses must implement the valid_moves method")
+        raise NotImplementedError("Some chess pieces are not implemented a valid move method")
 
 
 class Pawn(ChessPiece):
@@ -48,6 +48,28 @@ class Rook(ChessPiece):
         row_start, col_start = start
         row_end, col_end = end
         return row_start == row_end or col_start == col_end
+    
+        is_horizontal = row_start == row_end
+        is_vertical = col_start == col_end
+
+        if is_horizontal:
+            # Obstracle checking
+            step_col = 1 if col_end > col_start else -1
+            j = col_start + step_col
+            while j != col_end:
+                if board[row_start][j] is not None:
+                    return False  # Blocked by another piece
+                j += step_col
+        elif is_vertical:
+            # Check for obstructions in the vertical path
+            step_row = 1 if row_end > row_start else -1
+            i = row_start + step_row
+            while i != row_end:
+                if board[i][col_start] is not None:
+                    return False  # Blocked by another piece
+                i += step_row
+
+        return True  # If there are no obstructions, the move is valid
 
 
 class Knight(ChessPiece):
