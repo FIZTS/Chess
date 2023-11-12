@@ -260,7 +260,9 @@ class ChessBoard:
             black_king_exists = any(isinstance(piece, King) and piece.color == 'black' for row in self.board for piece in row)
 
             if not white_king_exists or not black_king_exists:
+                print("                        ♥")
                 print("!!!!!!!!!!!!!!!!!!!!Game Over!!!!!!!!!!!!!!!!!!!!")
+                print("                        ♥")
                 exit()
     
 
