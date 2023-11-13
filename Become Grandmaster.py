@@ -89,7 +89,6 @@ class Knight(ChessPiece):
 
         if (row_diff == 2 and col_diff == 1) or (row_diff == 1 and col_diff == 2):
             target_piece = board[row_end][col_end]
-            # Check if the end square is None or other colour piece
             if target_piece is None or target_piece.color != self.color:
                 return True
 
@@ -110,19 +109,19 @@ class Bishop(ChessPiece):
 
         # Check if the move is diagonal
         if abs(row_end - row_start) == abs(col_end - col_start):
-            # Check if there are no pieces blocking the diagonal path
+            # Got blocked
             step_row = 1 if row_end > row_start else -1
             step_col = 1 if col_end > col_start else -1
 
             i, j = row_start + step_row, col_start + step_col
             while i != row_end and j != col_end:
                 if board[i][j] is not None:
-                    return False  # Blocked by another piece
+                    return False  # Got blocked
                 i += step_row
                 j += step_col
 
             target_piece = board[row_end][col_end]
-            # Check if the target square is empty or contains an opponent's piece
+            # Check piece colour
             if target_piece is None or target_piece.color != self.color:
                 return True
 
