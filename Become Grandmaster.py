@@ -301,3 +301,7 @@ if __name__ == "__main__":
             continue
 
         chess_board.move_piece(start, end)
+
+'''
+นะโม ตัสสะ ภะคะวะโต อะระหะโต สัมมาสัมพุทธัสสะ
+'''
