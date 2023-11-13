@@ -289,12 +289,10 @@ if __name__ == "__main__":
         start_input = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the starting position (e.g., 'a2'): ")
         end_input = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the ending position (e.g., 'a4'): ")
 
-        # Validate input format
         if len(start_input) != 2 or len(end_input) != 2:
             print("Invalid input format. Please enter positions in the format 'a2'.")
             continue
 
-        # Validate input values
         try:
             start = (int(start_input[1]) - 1, ord(start_input[0]) - ord('a'))
             end = (int(end_input[1]) - 1, ord(end_input[0]) - ord('a'))
