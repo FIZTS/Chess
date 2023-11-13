@@ -47,7 +47,7 @@ class Rook(ChessPiece):
     def valid_moves(self, start, end, board):
         row_start, col_start = start
         row_end, col_end = end
-        return row_start == row_end or col_start == col_end
+        #return row_start == row_end or col_start == col_end
     
         is_horizontal = row_start == row_end
         is_vertical = col_start == col_end
@@ -69,7 +69,7 @@ class Rook(ChessPiece):
                     return False
                 i += step_row
 
-        return True  # Valid move
+        return True
 
 
 class Knight(ChessPiece):
