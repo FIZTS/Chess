@@ -277,6 +277,8 @@ class ChessBoard:
 
         except ValueError as e:
             print(f"Invalid move: {e}")
+        except Exception as e:
+            print(f"An error occurred: {e}")
 
 
 if __name__ == "__main__":
@@ -284,10 +286,20 @@ if __name__ == "__main__":
     chess_board.initialize_board()
     while True:
         chess_board.print_board()
-        start = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the starting position (e.g., 'a2'): ")
-        end = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the ending position (e.g., 'a4'): ")
+        start_input = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the starting position (e.g., 'a2'): ")
+        end_input = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the ending position (e.g., 'a4'): ")
 
-        start = (int(start[1]) - 1, ord(start[0]) - ord('a'))
-        end = (int(end[1]) - 1, ord(end[0]) - ord('a'))
+        # Validate input format
+        if len(start_input) != 2 or len(end_input) != 2:
+            print("Invalid input format. Please enter positions in the format 'a2'.")
+            continue
+
+        # Validate input values
+        try:
+            start = (int(start_input[1]) - 1, ord(start_input[0]) - ord('a'))
+            end = (int(end_input[1]) - 1, ord(end_input[0]) - ord('a'))
+        except ValueError:
+            print("Invalid input values. Please enter valid positions.")
+            continue
 
         chess_board.move_piece(start, end)
