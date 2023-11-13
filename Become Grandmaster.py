@@ -208,6 +208,10 @@ class King(ChessPiece):
 class ChessBoard:
     def __init__(self):
         self.board = [[None] * 8 for _ in range(8)]
+        self.current_player = 'white'
+        
+    def switch_turn(self):
+        self.current_player = 'black' if self.current_player == 'white' else 'white'
 
     def initialize_board(self):
         for i in range(8):
@@ -242,28 +246,38 @@ class ChessBoard:
                     print(piece, end='')
             print(f" {i}")
 
-    def is_valid_move(self, start, end, color):
+    def is_valid_move(self, start, end):
         if any(coord < 0 or coord >= 8 for coord in start + end):
             return False
         if start == end or self.board[start[0]][start[1]] is None:
             return False
+
         piece = self.board[start[0]][start[1]]
+
+        if piece.color != self.current_player:
+            raise ValueError(f"It's {self.current_player.capitalize()}'s turn. Cannot move {piece.color}'s piece.")
+
         return piece.valid_moves(start, end, self.board)
 
     def move_piece(self, start, end):
-        if self.is_valid_move(start, end, self.board[start[0]][start[1]].color):
-            self.board[end[0]][end[1]] = self.board[start[0]][start[1]]
-            self.board[start[0]][start[1]] = None
+        try:
+            if self.is_valid_move(start, end):
+                self.board[end[0]][end[1]] = self.board[start[0]][start[1]]
+                self.board[start[0]][start[1]] = None
+                self.switch_turn()
 
-        # Check if either king is gone
-            white_king_exists = any(isinstance(piece, King) and piece.color == 'white' for row in self.board for piece in row)
-            black_king_exists = any(isinstance(piece, King) and piece.color == 'black' for row in self.board for piece in row)
+                # Check if either king is gone
+                white_king_exists = any(isinstance(piece, King) and piece.color == 'white' for row in self.board for piece in row)
+                black_king_exists = any(isinstance(piece, King) and piece.color == 'black' for row in self.board for piece in row)
 
-            if not white_king_exists or not black_king_exists:
-                print("                        ♥")
-                print("!!!!!!!!!!!!!!!!!!!!Game Over!!!!!!!!!!!!!!!!!!!!")
-                print("                        ♥")
-                exit()
+                if not white_king_exists or not black_king_exists:
+                    print("                        ♥")
+                    print("!!!!!!!!!!!!!!!!!!!!Game Over!!!!!!!!!!!!!!!!!!!!")
+                    print("                        ♥")
+                    exit()
+
+        except ValueError as e:
+            print(f"Invalid move: {e}")
 
 
 if __name__ == "__main__":
@@ -271,8 +285,8 @@ if __name__ == "__main__":
     chess_board.initialize_board()
     while True:
         chess_board.print_board()
-        start = input("Enter the starting position (e.g., 'a2'): ")
-        end = input("Enter the ending position (e.g., 'a4'): ")
+        start = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the starting position (e.g., 'a2'): ")
+        end = input(f"{chess_board.current_player.capitalize()}'s turn. Enter the ending position (e.g., 'a4'): ")
 
         start = (int(start[1]) - 1, ord(start[0]) - ord('a'))
         end = (int(end[1]) - 1, ord(end[0]) - ord('a'))
