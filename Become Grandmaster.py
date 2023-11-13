@@ -292,4 +292,3 @@ if __name__ == "__main__":
         end = (int(end[1]) - 1, ord(end[0]) - ord('a'))
 
         chess_board.move_piece(start, end)
-        
